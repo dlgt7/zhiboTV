@@ -1,6 +1,7 @@
 import os
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import messagebox
 from tkinter import ttk
 
 import utils.constants as constants
@@ -36,6 +37,42 @@ class DefaultUI:
         )
         self.source_file_button.pack(side=tk.LEFT, padx=4, pady=0)
 
+        self.source_file_edit_button = tk.ttk.Button(
+            frame_default_source_file_column2,
+            text="编辑",
+            command=lambda: self.edit_file(config.source_file),
+        )
+        self.source_file_edit_button.pack(side=tk.LEFT, padx=4, pady=0)
+
+        frame_default_local_file = tk.Frame(root)
+        frame_default_local_file.pack(fill=tk.X)
+        frame_default_local_file_column1 = tk.Frame(frame_default_local_file)
+        frame_default_local_file_column1.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        frame_default_local_file_column2 = tk.Frame(frame_default_local_file)
+        frame_default_local_file_column2.pack(side=tk.RIGHT, fill=tk.Y)
+
+        self.local_file_label = tk.Label(
+            frame_default_local_file_column1, text="本地源文件:", width=8
+        )
+        self.local_file_entry = tk.Entry(frame_default_local_file_column1)
+        self.local_file_label.pack(side=tk.LEFT, padx=4, pady=8)
+        self.local_file_entry.pack(fill=tk.X, padx=4, expand=True)
+        self.local_file_entry.insert(0, config.local_file)
+
+        self.local_file_button = tk.ttk.Button(
+            frame_default_local_file_column2,
+            text="选择文件",
+            command=self.select_local_file,
+        )
+        self.local_file_button.pack(side=tk.LEFT, padx=4, pady=0)
+
+        self.local_file_edit_button = tk.ttk.Button(
+            frame_default_local_file_column2,
+            text="编辑",
+            command=lambda: self.edit_file(config.local_file),
+        )
+        self.local_file_edit_button.pack(side=tk.LEFT, padx=4, pady=0)
+
         frame_default_final_file = tk.Frame(root)
         frame_default_final_file.pack(fill=tk.X)
         frame_default_final_file_column1 = tk.Frame(frame_default_final_file)
@@ -57,6 +94,13 @@ class DefaultUI:
             command=self.select_final_file,
         )
         self.final_file_button.pack(side=tk.LEFT, padx=4, pady=0)
+
+        self.final_file_edit_button = tk.ttk.Button(
+            frame_default_final_file_column2,
+            text="编辑",
+            command=lambda: self.edit_file(config.final_file),
+        )
+        self.final_file_edit_button.pack(side=tk.LEFT, padx=4, pady=0)
 
         frame_default_open_update = tk.Frame(root)
         frame_default_open_update.pack(fill=tk.X)
@@ -109,19 +153,33 @@ class DefaultUI:
         frame_default_open_cache_column2 = tk.Frame(frame_default_open_cache)
         frame_default_open_cache_column2.pack(side=tk.RIGHT, fill=tk.Y)
 
-        self.open_use_old_result_label = tk.Label(
-            frame_default_open_cache_column1, text="使用历史结果:", width=12
+        self.open_local_label = tk.Label(
+            frame_default_open_cache_column1, text="开启本地源:", width=12
         )
-        self.open_use_old_result_label.pack(side=tk.LEFT, padx=4, pady=8)
-        self.open_use_old_result_var = tk.BooleanVar(value=config.open_use_old_result)
-        self.open_use_old_result_checkbutton = ttk.Checkbutton(
+        self.open_local_label.pack(side=tk.LEFT, padx=4, pady=8)
+        self.open_local_var = tk.BooleanVar(value=config.open_local)
+        self.open_local_checkbutton = ttk.Checkbutton(
             frame_default_open_cache_column1,
-            variable=self.open_use_old_result_var,
+            variable=self.open_local_var,
             onvalue=True,
             offvalue=False,
-            command=self.update_open_use_old_result,
+            command=self.update_open_local,
         )
-        self.open_use_old_result_checkbutton.pack(side=tk.LEFT, padx=4, pady=8)
+        self.open_local_checkbutton.pack(side=tk.LEFT, padx=4, pady=8)
+
+        self.open_history_label = tk.Label(
+            frame_default_open_cache_column2, text="使用历史结果:", width=12
+        )
+        self.open_history_label.pack(side=tk.LEFT, padx=4, pady=8)
+        self.open_history_var = tk.BooleanVar(value=config.open_history)
+        self.open_history_checkbutton = ttk.Checkbutton(
+            frame_default_open_cache_column2,
+            variable=self.open_history_var,
+            onvalue=True,
+            offvalue=False,
+            command=self.update_open_history,
+        )
+        self.open_history_checkbutton.pack(side=tk.LEFT, padx=4, pady=8)
 
         self.open_use_cache_label = tk.Label(
             frame_default_open_cache_column2, text="使用离线数据:", width=12
@@ -292,6 +350,19 @@ class DefaultUI:
         )
         self.open_update_time_checkbutton.pack(side=tk.LEFT, padx=4, pady=8)
 
+        self.update_time_position_label = tk.Label(
+            frame_default_open_update_info_column1, text="位置:", width=3
+        )
+        self.update_time_position_label.pack(side=tk.LEFT, padx=4, pady=8)
+        self.update_time_position_combo = ttk.Combobox(frame_default_open_update_info_column1, width=5)
+        self.update_time_position_combo.pack(side=tk.LEFT, padx=4, pady=8)
+        self.update_time_position_combo["values"] = ("顶部", "底部")
+        if config.update_time_position == "bottom":
+            self.update_time_position_combo.current(1)
+        else:
+            self.update_time_position_combo.current(0)
+        self.update_time_position_combo.bind("<<ComboboxSelected>>", self.update_update_time_position)
+
         self.open_url_info_label = tk.Label(
             frame_default_open_update_info_column2, text="显示接口信息:", width=12
         )
@@ -345,6 +416,18 @@ class DefaultUI:
         )
         self.ipv6_support_checkbutton.pack(side=tk.LEFT, padx=4, pady=8)
 
+        frame_time_zone = tk.Frame(root)
+        frame_time_zone.pack(fill=tk.X)
+
+        self.time_zone_label = tk.Label(
+            frame_time_zone, text="时区:", width=12
+        )
+        self.time_zone_label.pack(side=tk.LEFT, padx=4, pady=8)
+        self.time_zone_entry = tk.Entry(frame_time_zone, width=18)
+        self.time_zone_entry.pack(side=tk.LEFT, padx=4, pady=8)
+        self.time_zone_entry.insert(0, config.time_zone)
+        self.time_zone_entry.bind("<KeyRelease>", self.update_time_zone)
+
         frame_default_url_keywords = tk.Frame(root)
         frame_default_url_keywords.pack(fill=tk.X)
         frame_default_url_keywords_column1 = tk.Frame(frame_default_url_keywords)
@@ -382,9 +465,14 @@ class DefaultUI:
     def update_app_port(self, event):
         config.set("Settings", "app_port", self.app_port_entry.get())
 
-    def update_open_use_old_result(self):
+    def update_open_local(self):
         config.set(
-            "Settings", "open_use_old_result", str(self.open_use_old_result_var.get())
+            "Settings", "open_local", str(self.open_local_var.get())
+        )
+
+    def update_open_history(self):
+        config.set(
+            "Settings", "open_history", str(self.open_history_var.get())
         )
 
     def update_open_use_cache(self):
@@ -400,6 +488,15 @@ class DefaultUI:
             self.source_file_entry.delete(0, tk.END)
             self.source_file_entry.insert(0, filepath)
             config.set("Settings", "source_file", filepath)
+
+    def select_local_file(self):
+        filepath = filedialog.askopenfilename(
+            initialdir=os.getcwd(), title="选择本地源文件", filetypes=[("txt", "*.txt")]
+        )
+        if filepath:
+            self.local_file_entry.delete(0, tk.END)
+            self.local_file_entry.insert(0, filepath)
+            config.set("Settings", "local_file", filepath)
 
     def select_final_file(self):
         filepath = filedialog.askopenfilename(
@@ -431,6 +528,9 @@ class DefaultUI:
     def update_urls_limit(self, event):
         config.set("Settings", "urls_limit", self.urls_limit_entry.get())
 
+    def update_time_zone(self, event):
+        config.set("Settings", "time_zone", self.time_zone_entry.get())
+
     def update_open_update_time(self):
         config.set("Settings", "open_update_time", str(self.open_update_time_var.get()))
 
@@ -450,22 +550,30 @@ class DefaultUI:
     def update_ipv_type(self, event):
         config.set("Settings", "ipv_type", self.ipv_type_combo.get())
 
-    def edit_whitelist_file(self):
-        path = resource_path(constants.whitelist_path)
-        if os.path.exists(path):
+    def update_update_time_position(self, event):
+        config.set("Settings", "update_time_position",
+                   'bottom' if self.update_time_position_combo.get() == '底部' else 'top')
+
+    def edit_file(self, path):
+        if os.path.exists(resource_path(path)):
             os.system(f'notepad.exe {path}')
+        else:
+            print(f"File {path} not found!")
+            messagebox.showerror("Error", f"File {path} not found!")
+
+    def edit_whitelist_file(self):
+        self.edit_file(constants.whitelist_path)
 
     def edit_blacklist_file(self):
-        path = resource_path(constants.blacklist_path)
-        if os.path.exists(path):
-            os.system(f'notepad.exe {path}')
+        self.edit_file(constants.blacklist_path)
 
     def change_entry_state(self, state):
         for entry in [
             "open_update_checkbutton",
             "open_service_checkbutton",
             "app_port_entry",
-            "open_use_old_result_checkbutton",
+            "open_local_checkbutton",
+            "open_history_checkbutton",
             "open_use_cache_checkbutton",
             "open_request_checkbutton",
             "open_driver_checkbutton",
@@ -473,11 +581,18 @@ class DefaultUI:
             "request_timeout_entry",
             "source_file_entry",
             "source_file_button",
+            "source_file_edit_button",
+            "time_zone_entry",
             "final_file_entry",
             "final_file_button",
+            "final_file_edit_button",
+            "local_file_entry",
+            "local_file_button",
+            "local_file_edit_button",
             "open_keep_all_checkbutton",
             "open_m3u_result_checkbutton",
             "urls_limit_entry",
+            "update_time_position_combo",
             "open_update_time_checkbutton",
             "open_url_info_checkbutton",
             "open_empty_category_checkbutton",

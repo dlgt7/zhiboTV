@@ -18,7 +18,11 @@ sort_log_path = os.path.join(output_path, "sort.log")
 
 log_path = os.path.join(output_path, "log.log")
 
-url_pattern = r"((https?):\/\/)?(\[[0-9a-fA-F:]+\]|([\w-]+\.)+[\w-]+)(:[0-9]{1,5})?(\/[^\s]*)?(\$[^\s]+)?"
+url_host_pattern = r"((https?|rtmp)://)?(\[[0-9a-fA-F:]+]|([\w-]+\.?)+[\w-]+)"
+
+url_pattern = url_host_pattern + r"(.*)?"
+
+rtmp_url_pattern = r"^rtmp://.*$"
 
 rtp_pattern = r"^([^,，]+)(?:[,，])?(rtp://.*)$"
 
@@ -99,6 +103,8 @@ origin_map = {
     "multicast": "组播源",
     "subscribe": "订阅源",
     "online_search": "关键字源",
+    "whitelist": "白名单",
+    "local": "本地源",
 }
 
 ipv6_proxy = "http://www.ipv6proxy.net/go.php?u="
