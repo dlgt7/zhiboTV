@@ -126,6 +126,7 @@ https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/source.json
 | open_service           | 开启页面服务，用于控制是否启动结果页面服务；如果使用青龙等平台部署，有专门设定的定时任务，需要更新完成后停止运行，可以关闭该功能                                                                                                      | True              |
 | open_sort              | 开启排序功能（响应速度、日期、分辨率）                                                                                                                                                   | True              |
 | open_subscribe         | 开启订阅源功能                                                                                                                                                               | False             |
+| open_supply            | 开启补偿机制模式，用于控制当频道接口数量不足时，自动将不满足条件（例如低于最小速率）但可能可用的接口添加至结果中，从而避免结果为空的情况                                                                                                  | True              |
 | open_update            | 开启更新，用于控制是否更新接口，若关闭则所有工作模式（获取接口和测速）均停止                                                                                                                                | True              |
 | open_update_time       | 开启显示更新时间                                                                                                                                                              | True              |
 | open_url_info          | 开启显示接口说明信息，用于控制是否显示接口来源、分辨率、协议类型等信息，为$符号后的内容，播放软件使用该信息对接口进行描述，若部分播放器（如PotPlayer）不支持解析导致无法播放可关闭                                                                        | False             |
@@ -207,9 +208,9 @@ pipenv run ui
   版本运行模式（推荐酒店源、组播源、关键字搜索使用此版本）
 - iptv-api:lite（精简版本）：轻量级，性能要求低，更新速度快，稳定性不确定（推荐订阅源使用此版本）
 
-#### 1. 拉取镜像：
+#### 1. 拉取镜像
 
-- iptv-api：
+- iptv-api
 
 ```bash
 docker pull guovern/iptv-api:latest
@@ -221,7 +222,7 @@ docker pull guovern/iptv-api:latest
 docker pull docker.1ms.run/guovern/iptv-api:latest
 ```
 
-- iptv-api:lite：
+- iptv-api:lite
 
 ```bash
 docker pull guovern/iptv-api:lite
@@ -233,15 +234,15 @@ docker pull guovern/iptv-api:lite
 docker pull docker.1ms.run/guovern/iptv-api:lite
 ```
 
-#### 2. 运行容器：
+#### 2. 运行容器
 
-- iptv-api：
+- iptv-api
 
 ```bash
 docker run -d -p 8000:8000 guovern/iptv-api
 ```
 
-- iptv-api:lite：
+- iptv-api:lite
 
 ```bash
 docker run -d -p 8000:8000 guovern/iptv-api:lite
@@ -253,16 +254,18 @@ docker run -d -p 8000:8000 guovern/iptv-api:lite
 
 以宿主机路径/etc/docker 为例：
 
-- iptv-api：
+- iptv-api
 
 ```bash
-docker run -v /etc/docker/config:/iptv-api/config -v /etc/docker/output:/iptv-api/output -d -p 8000:8000 guovern/iptv-api
+-v /etc/docker/config:/iptv-api/config
+-v /etc/docker/output:/iptv-api/output
 ```
 
-- iptv-api:lite：
+- iptv-api:lite
 
 ```bash
-docker run -v /etc/docker/config:/iptv-api-lite/config -v /etc/docker/output:/iptv-api-lite/output -d -p 8000:8000 guovern/iptv-api:lite
+-v /etc/docker/config:/iptv-api-lite/config
+-v /etc/docker/output:/iptv-api-lite/output
 ```
 
 ##### 环境变量：
@@ -280,7 +283,7 @@ docker run -v /etc/docker/config:/iptv-api-lite/config -v /etc/docker/output:/ip
 -e UPDATE_CRON2="0 10 * * *"
 ```
 
-#### 3. 更新结果：
+#### 3. 更新结果
 
 - 接口地址：`ip:8000`
 - m3u 接口：`ip:8000/m3u`

@@ -127,6 +127,7 @@ https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/source.json
 | open_service           | Enable page service, used to control whether to start the result page service; if deployed on platforms like Qinglong with dedicated scheduled tasks, the function can be turned off after updates are completed and the task is stopped                                                                                                                                                                                         | True              |
 | open_sort              | Enable the sorting function (response speed, date, resolution)                                                                                                                                                                                                                                                                                                                                                                   | True              |
 | open_subscribe         | Enable subscription source feature                                                                                                                                                                                                                                                                                                                                                                                               | True              |
+| open_supply            | Enable compensation mechanism mode, used to control when the number of channel interfaces is insufficient, automatically add interfaces that do not meet the conditions (such as lower than the minimum rate) but may be available to the result, thereby avoiding the result being empty                                                                                                                                        | True              |
 | open_update            | Enable updates, if disabled then only the result page service is run                                                                                                                                                                                                                                                                                                                                                             | True              |
 | open_update_time       | Enable show update time                                                                                                                                                                                                                                                                                                                                                                                                          | True              |
 | open_url_info          | Enable to display interface description information, used to control whether to display interface source, resolution, protocol type and other information, the content after the $ symbol, the playback software uses this information to describe the interface, if some players (such as PotPlayer) do not support parsing and cannot play, you can turn it off                                                                | False             |
@@ -214,7 +215,7 @@ pipenv run ui
 
 It's recommended to try each one and choose the version that suits you
 
-#### 1. Pull the image:
+#### 1. Pull the image
 
 - iptv-api
 
@@ -240,7 +241,7 @@ docker pull guovern/iptv-api:lite
 docker pull docker.1ms.run/guovern/iptv-api:lite
 ```
 
-#### 2. Run the container:
+#### 2. Run the container
 
 - iptv-api
 
@@ -261,16 +262,18 @@ and retrieving updated result files can be directly operated in the host machine
 
 Taking the host path /etc/docker as an example:
 
-- iptv-api：
+- iptv-api
 
 ```bash
-docker run -v /etc/docker/config:/iptv-api/config -v /etc/docker/output:/iptv-api/output -d -p 8000:8000 guovern/iptv-api
+-v /etc/docker/config:/iptv-api/config
+-v /etc/docker/output:/iptv-api/output
 ```
 
-- iptv-api:lite：
+- iptv-api:lite
 
 ```bash
-docker run -v /etc/docker/config:/iptv-api-lite/config -v /etc/docker/output:/iptv-api-lite/output -d -p 8000:8000 guovern/iptv-api:lite
+-v /etc/docker/config:/iptv-api-lite/config
+-v /etc/docker/output:/iptv-api-lite/output
 ```
 
 ##### Environment Variables:
@@ -288,7 +291,7 @@ docker run -v /etc/docker/config:/iptv-api-lite/config -v /etc/docker/output:/ip
 -e UPDATE_CRON2="0 10 * * *"
 ```
 
-#### 3. Update results:
+#### 3. Update results
 
 - API address: `ip:8000`
 - m3u api：`ip:8000/m3u`

@@ -303,9 +303,9 @@ If you do not understand the software configuration options, do not change anyth
 - `iptv-api:lite` (lite version): Lightweight, low performance requirements, fast update speed, uncertain stability (
   recommended for subscription sources).
 
-### 1. Pull the image:
+### 1. Pull the image
 
-- iptv-api:
+- iptv-api
 
 ```bash
 docker pull guovern/iptv-api:latest
@@ -329,15 +329,15 @@ docker pull guovern/iptv-api:lite
 docker pull docker.1ms.run/guovern/iptv-api:lite
 ```
 
-### 2. Run the container:
+### 2. Run the container
 
-- iptv-api:
+- iptv-api
 
 ```bash
 docker run -d -p 8000:8000 guovern/iptv-api
 ```
 
-- iptv-api:lite:
+- iptv-api:lite
 
 ```bash
 docker run -d -p 8000:8000 guovern/iptv-api:lite
@@ -350,16 +350,18 @@ files directly in the host folder.
 
 Using the host path `/etc/docker` as an example:
 
-- iptv-api:
+- iptv-api
 
 ```bash
-docker run -v /etc/docker/config:/iptv-api/config -v /etc/docker/output:/iptv-api/output -d -p 8000:8000 guovern/iptv-api
+-v /etc/docker/config:/iptv-api/config
+-v /etc/docker/output:/iptv-api/output
 ```
 
-- iptv-api:lite:
+- iptv-api:lite
 
 ```bash
-docker run -v /etc/docker/config:/iptv-api-lite/config -v /etc/docker/output:/iptv-api-lite/output -d -p 8000:8000 guovern/iptv-api:lite
+-v /etc/docker/config:/iptv-api-lite/config
+-v /etc/docker/output:/iptv-api-lite/output
 ```
 
 ##### Note: If you pull the image again to update the version, and there are changes or additions to the configuration files, be sure to overwrite the old configuration files in the host (config directory), as the host configuration files cannot be updated automatically. Otherwise, the container will still run with the old configuration.
@@ -379,7 +381,7 @@ docker run -v /etc/docker/config:/iptv-api-lite/config -v /etc/docker/output:/ip
 -e UPDATE_CRON2="0 10 * * *"
 ```
 
-### 3. Update results:
+### 3. Update results
 
 ```
 - API address: `ip:8000`

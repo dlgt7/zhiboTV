@@ -271,9 +271,9 @@ pipenv run ui
   版本运行模式（推荐酒店源、组播源、关键字搜索使用此版本）
 - `iptv-api:lite`（精简版本）：轻量级，性能要求低，更新速度快，稳定性不确定（推荐订阅源使用此版本）
 
-### 1.拉取镜像：
+### 1. 拉取镜像
 
-- iptv-api：
+- iptv-api
 
 ```bash
 docker pull guovern/iptv-api:latest
@@ -285,7 +285,7 @@ docker pull guovern/iptv-api:latest
 docker pull docker.1ms.run/guovern/iptv-api:latest
 ```
 
-- iptv-api:lite：
+- iptv-api:lite
 
 ```bash
 docker pull guovern/iptv-api:lite
@@ -297,15 +297,15 @@ docker pull guovern/iptv-api:lite
 docker pull docker.1ms.run/guovern/iptv-api:lite
 ```
 
-### 2.运行容器：
+### 2. 运行容器
 
-- iptv-api：
+- iptv-api
 
 ```bash
 docker run -d -p 8000:8000 guovern/iptv-api
 ```
 
-- iptv-api:lite：
+- iptv-api:lite
 
 ```bash
 docker run -d -p 8000:8000 guovern/iptv-api:lite
@@ -317,16 +317,18 @@ docker run -d -p 8000:8000 guovern/iptv-api:lite
 
 以宿主机路径`/etc/docker`为例：
 
-- iptv-api：
+- iptv-api
 
 ```bash
-docker run -v /etc/docker/config:/iptv-api/config -v /etc/docker/output:/iptv-api/output -d -p 8000:8000 guovern/iptv-api
+-v /etc/docker/config:/iptv-api/config
+-v /etc/docker/output:/iptv-api/output
 ```
 
-- iptv-api:lite：
+- iptv-api:lite
 
 ```bash
-docker run -v /etc/docker/config:/iptv-api-lite/config -v /etc/docker/output:/iptv-api-lite/output -d -p 8000:8000 guovern/iptv-api:lite
+-v /etc/docker/config:/iptv-api-lite/config
+-v /etc/docker/output:/iptv-api-lite/output
 ```
 
 ##### 注意：如果重新拉取镜像进行更新版本后，涉及到配置文件变更或增加新配置时，务必覆盖主机的旧配置文件（config目录），因为主机的配置文件是无法自动更新的，否则容器还是以旧配置运行。
@@ -346,7 +348,7 @@ docker run -v /etc/docker/config:/iptv-api-lite/config -v /etc/docker/output:/ip
 -e UPDATE_CRON2="0 10 * * *"
 ```
 
-### 3.更新结果：
+### 3. 更新结果
 
 - 接口地址：`ip:8000`
 - m3u 接口：`ip:8000/m3u`
