@@ -72,14 +72,12 @@
 - 接口源：
 
 ```bash
-https://ghproxy.cc/https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.m3u
+https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.m3u
 ```
 
 ```bash
-https://ghproxy.cc/https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.txt
+https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.txt
 ```
-
-🙏 感谢由[ghproxy.cc](https://ghproxy.cc)提供的代理加速服务
 
 或
 
@@ -94,7 +92,7 @@ https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/output/result.txt
 - 数据源：
 
 ```bash
-https://ghproxy.cc/https://raw.githubusercontent.com/Guovin/iptv-api/gd/source.json
+https://raw.githubusercontent.com/Guovin/iptv-api/gd/source.json
 ```
 
 或
@@ -141,7 +139,7 @@ https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/source.json
 | ipv6_num               | 结果中偏好的 IPv6 接口数量                                                                                                                                                      | 5                 |
 | ipv6_support           | 强制认为当前网络支持IPv6，跳过检测                                                                                                                                                   | False             |
 | ipv_type               | 生成结果中接口的协议类型，可选值：ipv4、ipv6、全部、all                                                                                                                                     | 全部                |
-| ipv_type_prefer        | 接口协议类型偏好，优先将该类型的接口排在结果前面，可选值：ipv4、ipv6、自动、auto                                                                                                                        | 自动                |
+| ipv_type_prefer        | 接口协议类型偏好，优先将该类型的接口排在结果前面，可选值：ipv4、ipv6、自动、auto                                                                                                                        | ipv6,ipv4         |
 | local_file             | 本地源文件路径                                                                                                                                                               | config/local.txt  |
 | local_num              | 结果中偏好的本地源接口数量                                                                                                                                                         | 10                |
 | min_resolution         | 接口最小分辨率，需要开启 open_filter_resolution 才能生效                                                                                                                              | 1920x1080         |
