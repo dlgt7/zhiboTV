@@ -39,9 +39,18 @@ other features, under development...
 - [📖 Detailed Tutorial](./docs/tutorial_en.md)
 - [🗓️ Changelog](./CHANGELOG.md)
 - [❤️ Appreciate](#appreciate)
-- [👀 Follow(Update Subscription + Q&A)](#follow)
+- [👀 Follow the public account](#follow)
 - [📣 Disclaimer](#disclaimer)
 - [⚖️ License](#license)
+
+> [!IMPORTANT]
+> 1. The default data sources, such as subscription sources, come from open-source projects on GitHub and are for
+     demonstration purposes only. They may have stability issues.
+> 2. This project does not guarantee or explain the stability of the interface results.
+> 3. To achieve optimal stability, it is recommended to maintain the data sources yourself.
+
+<details>
+  <summary>Default Data Sources</summary>
 
 📍Subscription sources are from:
 
@@ -61,6 +70,8 @@ other features, under development...
 
 - [fanmingming/live](https://github.com/fanmingming/live)
 
+</details>
+
 ## Features
 
 - ✅ Customize the template to generate the channel you want
@@ -75,36 +86,34 @@ other features, under development...
 
 ## Latest results
 
-- Interface source:
+> [!IMPORTANT]\
+> The following addresses may fail to be accessed domestically. It is recommended to prepend a proxy address for use.
+> The public account can reply with `CDN` to obtain it.
+
+### Live Sources
+
+- Default
 
 ```bash
 https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.m3u
 ```
 
-```bash
-https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.txt
-```
-
-or
+- IPv6
 
 ```bash
-https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/output/result.m3u
+https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/ipv6/result.m3u
 ```
+
+- IPv4
 
 ```bash
-https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/output/result.txt
+https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/ipv4/result.m3u
 ```
 
-- Data source:
+### VOD source
 
 ```bash
 https://raw.githubusercontent.com/Guovin/iptv-api/gd/source.json
-```
-
-or
-
-```bash
-https://cdn.jsdelivr.net/gh/Guovin/iptv-api@gd/source.json
 ```
 
 ## Config
@@ -244,10 +253,11 @@ Taking the host path /etc/docker as an example:
 
 ##### Environment Variables:
 
-| Variable    | Description    | Default Value   |
-|:------------|:---------------|:----------------|
-| APP_PORT    | Port           | 8000            |
-| UPDATE_CRON | Scheduled Time | "0 22,10 * * *" |
+| Variable    | Description          | Default Value      |
+|:------------|:---------------------|:-------------------|
+| APP_HOST    | Service host address | "http://localhost" |
+| APP_PORT    | Service port         | 8000               |
+| UPDATE_CRON | Scheduled task time  | "0 22,10 * * *"    |
 
 #### 3. Update Results
 
@@ -266,6 +276,13 @@ Taking the host path /etc/docker as an example:
 | /log      | Speed test log        |
 
 - RTMP Streaming:
+
+> [!NOTE]
+> 1. To stream local video sources, create a `live` or `hls` (recommended) folder in the `config` directory.
+> 2. The `live` folder is used for live streaming interfaces, and the `hls` folder is used for HLS streaming interfaces.
+> 3. Place video files named after the `channel name` into these folders, and the program will automatically stream them
+     to the corresponding channels.
+> 4. Visit http://localhost:8080/stat to view real-time streaming status statistics.
 
 | Streaming Endpoint | Description                      |
 |:-------------------|:---------------------------------|

@@ -34,7 +34,6 @@ ARG APP_WORKDIR=/iptv-api
 ENV APP_WORKDIR=$APP_WORKDIR
 ENV APP_HOST="http://localhost"
 ENV APP_PORT=8000
-ENV SERVER_PORT=8002
 ENV PATH="/.venv/bin:/usr/local/nginx/sbin:$PATH"
 ENV UPDATE_CRON="0 22,10 * * *"
 
